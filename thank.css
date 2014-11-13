@@ -1,0 +1,52 @@
+#thank-box{
+    overflow : hidden;
+}
+
+.thank-container {
+    margin          : 0;
+    padding         : 0;
+    list-style-type : none;
+}
+
+.thank-container li {
+    text-align        : center;
+    min-width         : 50px;
+    float             : left;
+    padding           : .5em;
+    margin            : .5em;
+    border            : 1px solid #EEE;
+    border-radius     : 5px;
+    cursor            : pointer;
+    background-repeat : no-repeat;
+}
+
+.thank-container li i {
+    width            : 25px;
+    height           : 25px;
+    display          : inline-block;
+    background-image : url("svg/icons.svg");
+}
+
+.icon-twitter { background-position : 0 0; }
+
+.icon-facebook { background-position : -40px 0; }
+
+.icon-vkontakte { background-position : -70px 0; }
+
+.icon-google { background-position : -100px 0; }
+
+.twitter:hover {
+    border-color : #3CF;
+}
+
+.facebook:hover {
+    border-color : #3CF;
+}
+
+.vkontakte:hover {
+    border-color : #3CF;
+}
+
+.google:hover {
+    border-color : #3CF;
+}
