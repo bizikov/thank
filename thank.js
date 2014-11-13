@@ -8,9 +8,9 @@
 (function () {
     function thank() {
         var btn = {
-            'twitter': 'Tweet',
-            'facebook': 'Share',
-            'vkontakte': 'Like',
+            'twitter': 'Twitter',
+            'facebook': 'Facebook',
+            'vkontakte': 'Вконтакте',
             'google': '+1'
         };
 
@@ -18,10 +18,35 @@
 
         // Информация о странице
         var sharing = {
-            title: document.title,
-            url: location.href,
-            thumb: '', // todo: написать функцию, которая будет искать картинку на странице
-            message: 'test message' // todo: добавить функцию, которвя будет искать описание страницы
+            title: function () {
+                return document.title;
+            },
+            url: function () {
+                return location.href;
+            },
+            thumb: function () {
+                var imageUrl = "";
+                var metaList = document.getElementsByTagName('meta');
+
+                for (var i = 0; i < metaList.length; i++) {
+                    if (metaList[i].getAttribute("property") == "og:image" || metaList[i].getAttribute("name") == "twitter:image:src") {
+                        imageUrl = metaList[i].getAttribute("content");
+                    }
+                }
+                return imageUrl;
+            },
+            message: function () {
+                var message = '';
+                var metaList = document.getElementsByTagName('meta');
+
+                for (var i = 0; i < metaList.length; i++) {
+
+                    if (metaList[i].getAttribute("property") == "og:description" || metaList[i].getAttribute("name") == "twitter:description" || metaList[i].getAttribute("name") == "description") {
+                        message = metaList[i].getAttribute("content");
+                    }
+                }
+                return message;
+            }
         };
 
         // Формирование ссылок
@@ -29,30 +54,30 @@
             twitter: function () {
                 var url;
                 url = 'http://twitter.com/share?';
-                url += 'text=' + encodeURIComponent(sharing.title);
-                url += '&url=' + encodeURIComponent(sharing.url);
-                url += '&counturl=' + encodeURIComponent(sharing.url);
+                url += 'text=' + encodeURIComponent(sharing.title());
+                url += '&url=' + encodeURIComponent(sharing.url());
+                url += '&counturl=' + encodeURIComponent(sharing.url());
                 return url;
             },
             google: function () {
-                var url = 'https://plus.google.com/share?url=' + encodeURIComponent(sharing.url);
+                var url = 'https://plus.google.com/share?url=' + encodeURIComponent(sharing.url());
                 return url;
             },
             facebook: function () {
                 url = 'http://www.facebook.com/sharer.php?s=100';
-                url += '&p[title]=' + encodeURIComponent(sharing.title);
-                url += '&p[summary]=' + encodeURIComponent(sharing.message);
-                url += '&p[url]=' + encodeURIComponent(sharing.url);
-                url += '&p[images][0]=' + encodeURIComponent(sharing.thumb);
+                url += '&p[title]=' + encodeURIComponent(sharing.title());
+                url += '&p[summary]=' + encodeURIComponent(sharing.message());
+                url += '&p[url]=' + encodeURIComponent(sharing.url());
+                url += '&p[images][0]=' + encodeURIComponent(sharing.thumb());
                 return url;
             },
             vkontakte: function () {
                 var url;
                 url = 'http://vkontakte.ru/share.php?';
-                url += 'url=' + encodeURIComponent(sharing.url);
-                url += '&title=' + encodeURIComponent(sharing.title);
-                url += '&description=' + encodeURIComponent(sharing.message);
-                url += '&image=' + encodeURIComponent(sharing.thumb);
+                url += 'url=' + encodeURIComponent(sharing.url());
+                url += '&title=' + encodeURIComponent(sharing.title());
+                url += '&description=' + encodeURIComponent(sharing.message());
+                url += '&image=' + encodeURIComponent(sharing.thumb());
                 url += '&noparse=true';
                 return url;
             }
@@ -60,7 +85,7 @@
 
         // Показываем окно для публикации запись в социальную сеть
         function send(url) {
-            window.open(url, '', 'toolbar=0,status=0,width=600,height=400');
+            window.open(url, '', 'toolbar=0,status=0,width=500,height=400');
         }
 
         // Создаем html для кнопок
