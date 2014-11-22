@@ -16,6 +16,10 @@
 
         var box = document.getElementById('thank-box');
 
+        if(!box){
+            return false;
+        }
+
         // Информация о странице
         var sharing = {
             title: function () {
